@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,7 +21,9 @@ public class OrderRepository {
 		return em.find(Order.class, id);
 	}
 
-//	public List<Order> findAll() {
-//		return em.createQuery("select ")
-//	}
+	public List<Order> findAll(OrderSearch orderSearch) {
+		return em.createQuery("select o from Order o join o.member m", Order.class)
+				.setMaxResults(1000)
+				.getResultList();
+	}
 }
